@@ -15,10 +15,6 @@
 1. h2서버 설치
 
     - [h2다운로드 링크](http://www.h2database.com/html/download.html)
-2. 쿼리 작성
-
-    - 파일 경로 확인 api\src\main\resources\file\test.sql를 이용하여 쿼리 수행
-3. api 호출 확인
 
 ---
 
