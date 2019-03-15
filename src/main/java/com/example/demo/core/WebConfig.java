@@ -17,9 +17,8 @@ import java.util.List;
  * Created by whydd on 2017-07-14.
  */
 @Configuration
-@ComponentScan
 @EnableWebMvc
-public class WebConfig extends WebMvcConfigurerAdapter{
+public class WebConfig implements WebMvcConfigurer {
 
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         DefaultParamsArgumentResolver defaultParamsArgumentResolver = new DefaultParamsArgumentResolver();
@@ -45,14 +44,6 @@ public class WebConfig extends WebMvcConfigurerAdapter{
         characterEncodingFilter.setForceEncoding(true);
         return characterEncodingFilter;
     }
-
-//    @Bean
-//    public ViewResolver viewResolver() {
-//        InternalResourceViewResolver internalResourceViewResolver = new InternalResourceViewResolver();
-//        internalResourceViewResolver.setPrefix("/WEB-INF/jsp/");
-//        internalResourceViewResolver.setSuffix(".jsp");
-//        return internalResourceViewResolver;
-//    }
 
     public void configureViewResolvers(ViewResolverRegistry registry) {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
