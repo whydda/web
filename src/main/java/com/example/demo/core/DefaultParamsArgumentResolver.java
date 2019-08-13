@@ -1,9 +1,10 @@
 package com.example.demo.core;
 
 /**
- * Created by whydd on 2017-07-13.
+ * Created by whydda on 2017-07-13.
  */
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -19,8 +20,9 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 /**
- * Created by whydd on 2017-03-03.
+ * Created by whydda on 2017-03-03.
  */
+@Slf4j
 public class DefaultParamsArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override

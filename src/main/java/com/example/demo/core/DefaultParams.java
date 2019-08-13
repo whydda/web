@@ -8,7 +8,7 @@ import java.util.Map;
 public class DefaultParams {
     private Map<String, Object> map;
 
-    public Map getMap() {
+    public Map<String, Object> getMap() {
         return map;
     }
 
@@ -20,7 +20,16 @@ public class DefaultParams {
         this.map.put(key, value);
     }
 
-    public Map<String, Object> get(String key){
-        return (Map<String, Object>) map.get(key);
+    public Object get(String key){
+        return map.get(key);
+    }
+
+    public String getString(String key) {
+        return String.valueOf(map.get(key));
+    }
+
+    @Override
+    public String toString() {
+        return this.map.toString();
     }
 }
