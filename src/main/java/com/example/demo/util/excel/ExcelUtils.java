@@ -19,6 +19,7 @@ import java.util.*;
 public class ExcelUtils {
     /**
      * 공통 - 엑셀 다운로드
+     *
      * @param excelList
      * @param title
      * @param file_name
@@ -87,9 +88,9 @@ public class ExcelUtils {
 
             Iterator<String> keys = mapv.keySet().iterator();
             int j = 0;
-            while(keys.hasNext()) {
-            	String key = keys.next();
-            	if (mapv.get(key) == null) {
+            while (keys.hasNext()) {
+                String key = keys.next();
+                if (mapv.get(key) == null) {
                     cell = row.createCell(j);
                     cell.setCellValue("");
                 } else {
@@ -172,9 +173,9 @@ public class ExcelUtils {
 
             Iterator<String> keys = mapv.keySet().iterator();
             int j = 0;
-            while(keys.hasNext()) {
-            	String key = keys.next();
-            	if (mapv.get(key) == null) {
+            while (keys.hasNext()) {
+                String key = keys.next();
+                if (mapv.get(key) == null) {
                     cell = row.createCell(j);
                     cell.setCellValue("");
                 } else {
@@ -189,7 +190,7 @@ public class ExcelUtils {
 
         for (int titleNo = 0; titleNo < titleArr.length; titleNo++) {
             sheet.autoSizeColumn(titleNo, true);
-            sheet.setColumnWidth(titleNo, (sheet.getColumnWidth(titleNo))+512 );
+            sheet.setColumnWidth(titleNo, (sheet.getColumnWidth(titleNo)) + 512);
         }
 
         return wb;
@@ -198,6 +199,7 @@ public class ExcelUtils {
     /**
      * 엑셀파일을 읽어서 Workbook 객체에 리턴한다.
      * XLS와 XLSX 확장자를 비교한다.
+     *
      * @param fis
      * @return
      */
@@ -209,7 +211,7 @@ public class ExcelUtils {
         } catch (Exception e) {
             try {
                 wb = new HSSFWorkbook(fis);
-            }catch (IOException ioe){
+            } catch (IOException ioe) {
                 throw new Exception(ioe.getMessage(), ioe);
             }
         }
@@ -218,12 +220,13 @@ public class ExcelUtils {
 
     /**
      * 엑셀데이타 업로드
+     *
      * @param workbook
      * @param excelReadOption
      * @return
      * @throws Exception
      */
-    public static List<Map<String,String>> excelDataUpload(Workbook workbook, ExcelReadOption excelReadOption) throws Exception {
+    public static List<Map<String, String>> excelDataUpload(Workbook workbook, ExcelReadOption excelReadOption) throws Exception {
         //엑셀 파일 자체
         //엑셀파일을 읽어 들인다.
         //FileType.getWorkbook() <-- 파일의 확장자에 따라서 적절하게 가져온다.
@@ -250,61 +253,61 @@ public class ExcelUtils {
          * put("B", "게임명");
          */
         Map<String, String> map = null;
-            /*
-             * 각 Row를 리스트에 담는다.
-             * 하나의 Row를 하나의 Map으로 표현되며
-             * List에는 모든 Row가 포함될 것이다.
-             */
+        /*
+         * 각 Row를 리스트에 담는다.
+         * 하나의 Row를 하나의 Map으로 표현되며
+         * List에는 모든 Row가 포함될 것이다.
+         */
         List<Map<String, String>> result = new ArrayList<Map<String, String>>();
 
         /**
          * 각 Row만큼 반복을 한다.
          */
-        for(int rowIndex = excelReadOption.getStartRow() - 1; rowIndex < numOfRows; rowIndex++) {
-                /*
-                 * 워크북에서 가져온 시트에서 rowIndex에 해당하는 Row를 가져온다.
-                 * 하나의 Row는 여러개의 Cell을 가진다.
-                 */
+        for (int rowIndex = excelReadOption.getStartRow() - 1; rowIndex < numOfRows; rowIndex++) {
+            /*
+             * 워크북에서 가져온 시트에서 rowIndex에 해당하는 Row를 가져온다.
+             * 하나의 Row는 여러개의 Cell을 가진다.
+             */
             row = sheet.getRow(rowIndex);
 
-            if(row != null) {
-                    /*
-                     * 가져온 Row의 Cell의 개수를 구한다.
-                     */
+            if (row != null) {
+                /*
+                 * 가져온 Row의 Cell의 개수를 구한다.
+                 */
                 numOfCells = row.getPhysicalNumberOfCells();
-                    /*
-                     * 데이터를 담을 맵 객체 초기화
-                     */
+                /*
+                 * 데이터를 담을 맵 객체 초기화
+                 */
                 map = new HashMap<String, String>();
+                /*
+                 * cell의 수 만큼 반복한다.
+                 */
+                for (int cellIndex = 0; cellIndex < numOfCells; cellIndex++) {
                     /*
-                     * cell의 수 만큼 반복한다.
+                     * Row에서 CellIndex에 해당하는 Cell을 가져온다.
                      */
-                for(int cellIndex = 0; cellIndex < numOfCells; cellIndex++) {
-                        /*
-                         * Row에서 CellIndex에 해당하는 Cell을 가져온다.
-                         */
                     cell = row.getCell(cellIndex);
-                        /*
-                         * 현재 Cell의 이름을 가져온다
-                         * 이름의 예 : A,B,C,D,......
-                         */
+                    /*
+                     * 현재 Cell의 이름을 가져온다
+                     * 이름의 예 : A,B,C,D,......
+                     */
                     cellName = ExcelCellRef.getName(cell, cellIndex);
-                        /*
-                         * 추출 대상 컬럼인지 확인한다
-                         * 추출 대상 컬럼이 아니라면,
-                         * for로 다시 올라간다
-                         */
-                    if( !excelReadOption.getOutputColumns().contains(cellName) ) {
+                    /*
+                     * 추출 대상 컬럼인지 확인한다
+                     * 추출 대상 컬럼이 아니라면,
+                     * for로 다시 올라간다
+                     */
+                    if (!excelReadOption.getOutputColumns().contains(cellName)) {
                         continue;
                     }
-                        /*
-                         * map객체의 Cell의 이름을 키(Key)로 데이터를 담는다.
-                         */
+                    /*
+                     * map객체의 Cell의 이름을 키(Key)로 데이터를 담는다.
+                     */
                     map.put(cellName, ExcelCellRef.getValue(cell));
                 }
-                    /*
-                     * 만들어진 Map객체를 List로 넣는다.
-                     */
+                /*
+                 * 만들어진 Map객체를 List로 넣는다.
+                 */
                 result.add(map);
 
             }
@@ -333,13 +336,13 @@ public class ExcelUtils {
 
     public static void write(HttpServletResponse res, Workbook workbook, String filename, boolean setCookie) throws IOException {
 
-    	res.setContentType("application/octet-stream");
-    	res.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
-    	res.setHeader("Set-Cookie","fileDownload="+String.valueOf(setCookie)+"; path=/");
-		OutputStream fop = res.getOutputStream();
-		if(ExcelUtils.write(fop, workbook)) {
-			return;
-		}
+        res.setContentType("application/octet-stream");
+        res.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+        res.setHeader("Set-Cookie", "fileDownload=" + String.valueOf(setCookie) + "; path=/");
+        OutputStream fop = res.getOutputStream();
+        if (ExcelUtils.write(fop, workbook)) {
+            return;
+        }
 
     }
 }

@@ -14,6 +14,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class CommonUtils {
     /**
      * 값이 없는 Object 객체 삭제
+     *
      * @param i
      * @return
      */
@@ -22,7 +23,7 @@ public class CommonUtils {
         atomicBoolean.set(false);
 
         i.forEach((k, v) -> {
-            if(StringUtils.isEmpty(v)){
+            if (StringUtils.isEmpty(v)) {
                 atomicBoolean.set(true);
             }
         });

@@ -18,20 +18,20 @@ import java.util.Map;
 /**
  * Created by whydd on 2017-07-13.
  */
-public class LoginInterceptor extends HandlerInterceptorAdapter{
+public class LoginInterceptor extends HandlerInterceptorAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginInterceptor.class);
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        if(request.getSession().getAttribute("ROLE") == null){
+        if (request.getSession().getAttribute("ROLE") == null) {
             throw new AuthException(HttpStatus.UNAUTHORIZED.value(), "세션이 만료 되었습니다.");
         }
 
         Map pathVariables = (Map) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
 
-        if(pathVariables != null){
-            if(!pathVariablesChk(pathVariables)){
+        if (pathVariables != null) {
+            if (!pathVariablesChk(pathVariables)) {
                 throw new AuthException(HttpStatus.UNAUTHORIZED.value(), "잘못된 경로로 접근하였습니다.");
             }
         }
@@ -54,13 +54,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
         super.afterConcurrentHandlingStarted(request, response, handler);
     }
 
-    private boolean pathVariablesChk(Map pathMap){
+    private boolean pathVariablesChk(Map pathMap) {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession session = sra.getRequest().getSession();
 
-        Map<String, String> userMap = (Map<String, String>)session.getAttribute("userMap");
+        Map<String, String> userMap = (Map<String, String>) session.getAttribute("userMap");
 
-        if(pathMap.get("id") != null){
+        if (pathMap.get("id") != null) {
             return StringUtils.equals(String.valueOf(pathMap.get("id")), userMap.get("userId"));
         }
 

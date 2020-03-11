@@ -16,19 +16,19 @@ public class ExceptionAdvice {
     private final static Logger LOGGER = LoggerFactory.getLogger(ExceptionAdvice.class);
 
     @ExceptionHandler(Exception.class)
-    public Map<String, Object> handleException(Exception e) throws Exception{
+    public Map<String, Object> handleException(Exception e) throws Exception {
         LOGGER.error(e.getMessage(), e, e.getStackTrace());
         return new HashMap<>();
     }
 
     @ExceptionHandler(ApiException.class)
-    public Map<String, Object> handleApiException(ApiException ae) throws Exception{
+    public Map<String, Object> handleApiException(ApiException ae) throws Exception {
         LOGGER.error(ae.getMessage(), ae, ae.getStackTrace());
         return new HashMap<>();
     }
 
     @ExceptionHandler(AuthException.class)
-    public Map<String, Object> handleApiException(AuthException ae) throws Exception{
+    public Map<String, Object> handleApiException(AuthException ae) throws Exception {
         LOGGER.error(ae.getMessage(), ae, ae.getStackTrace());
         return new HashMap<>();
     }

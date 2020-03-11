@@ -28,7 +28,7 @@
             <appender-ref ref="file"/>
         </root>
         <logger name="com.example.demo" level="debug"/>
-        <logger name="org.springframework" level="info" />
+        <logger name="org.springframework" level="info"/>
     </springProfile>
     <springProfile name="stg">
         <root level="debug">
@@ -36,7 +36,7 @@
             <appender-ref ref="file"/>
         </root>
         <logger name="com.example.demo" level="debug"/>
-        <logger name="org.springframework" level="info" />
+        <logger name="org.springframework" level="info"/>
     </springProfile>
     <springProfile name="prod">
         <root level="info">
@@ -44,6 +44,6 @@
             <appender-ref ref="file"/>
         </root>
         <logger name="com.example.demo" level="info"/>
-        <logger name="org.springframework" level="info" />
+        <logger name="org.springframework" level="info"/>
     </springProfile>
 </configuration>

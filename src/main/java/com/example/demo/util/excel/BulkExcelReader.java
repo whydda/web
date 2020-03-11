@@ -33,24 +33,24 @@ import java.util.*;
  */
 public class BulkExcelReader {
 
-	private Set<String> setList = new HashSet<String>();
+    private Set<String> setList = new HashSet<String>();
 
-	public List<Map<String,Object>> getList(){
-  		return returnList();
-  	}
+    public List<Map<String, Object>> getList() {
+        return returnList();
+    }
 
-	private List<Map<String,Object>> returnList(){
-		List list = new ArrayList<Map<String,Object>>();
-		for (String str : setList) {
-			if(str.equals("USER_ID"))continue;
-			Map tmp = new HashMap<String,Object>();
-        	tmp.put("MEMBER_ID", str);
-        	list.add(tmp);
-		}
-		return list;
-	}
+    private List<Map<String, Object>> returnList() {
+        List list = new ArrayList<Map<String, Object>>();
+        for (String str : setList) {
+            if (str.equals("USER_ID")) continue;
+            Map tmp = new HashMap<String, Object>();
+            tmp.put("MEMBER_ID", str);
+            list.add(tmp);
+        }
+        return list;
+    }
 
-	 public void processFirstSheet(InputStream inputStream) throws Exception {
+    public void processFirstSheet(InputStream inputStream) throws Exception {
 
         try (OPCPackage pkg = OPCPackage.open(inputStream)) {
             XSSFReader r = new XSSFReader(pkg);
@@ -59,12 +59,11 @@ public class BulkExcelReader {
             XMLReader parser = fetchSheetParser(sst);
             // process the first sheet
             try (InputStream sheet = r.getSheetsData().next()) {
-				InputSource sheetSource = new InputSource(sheet);
-				parser.parse(sheetSource);
+                InputSource sheetSource = new InputSource(sheet);
+                parser.parse(sheetSource);
             }
         }
     }
-
 
 
     public XMLReader fetchSheetParser(SharedStringsTable sst) throws SAXException, ParserConfigurationException {
@@ -90,7 +89,7 @@ public class BulkExcelReader {
         public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
 
             // c => cell, A TYPE COLUMN only
-            if(name.equals("c") && attributes.getValue("r").indexOf("A")>-1) {
+            if (name.equals("c") && attributes.getValue("r").indexOf("A") > -1) {
                 String cellType = attributes.getValue("t");
                 nextIsString = cellType != null && cellType.equals("s");
             }
@@ -102,12 +101,12 @@ public class BulkExcelReader {
         public void endElement(String uri, String localName, String name) throws SAXException {
             // Process the last contents as required.
             // Do now, as characters() may be called more than once
-            if(nextIsString) {
-            	Integer idx = Integer.valueOf(lastContents);
-            	//getting inserted xml value by idx
-            	lastContents = new XSSFRichTextString(sst.getEntryAt(idx)).toString();
-            	setList.add(lastContents);
-            	//nextFalse
+            if (nextIsString) {
+                Integer idx = Integer.valueOf(lastContents);
+                //getting inserted xml value by idx
+                lastContents = new XSSFRichTextString(sst.getEntryAt(idx)).toString();
+                setList.add(lastContents);
+                //nextFalse
                 nextIsString = false;
             }
 

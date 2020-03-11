@@ -16,11 +16,11 @@ public class DefaultParams {
         this.map = map;
     }
 
-    public void put(String key, Object value){
+    public void put(String key, Object value) {
         this.map.put(key, value);
     }
 
-    public Object get(String key){
+    public Object get(String key) {
         return map.get(key);
     }
 

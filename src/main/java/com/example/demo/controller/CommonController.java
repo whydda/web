@@ -13,20 +13,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class CommonController {
 
     @GetMapping(value = "/")
-    public String index()
-    {
+    public String index() {
         return "index";
     }
 
     @GetMapping(value = "/error")
-    public String error()
-    {
+    public String error() {
         return "error";
     }
 
     @GetMapping(value = "/test")
-    public String test(DefaultParams defaultParams)
-    {
+    public String test(DefaultParams defaultParams) {
         log.info("defaultParams.toString() : : : " + defaultParams.toString());
         return "test";
     }
